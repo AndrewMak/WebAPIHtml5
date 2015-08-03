@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiplos arquivos com HTML5 e WebAPI</title>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+</head>
+
+<body style="font:15px Verdana;">
+
+    <form action="">
+        Selecione seus arquivos.
+        <input type="file" id="file" name="file" multiple />
+        <input id="btUpload" type="button" value="Enviar arquivos" />
+        <p></p>
+    </form>
+
+</body>
+<script>
+
+    $(document).ready(function () {
+
+        $("#btUpload").click(function () {
+
+            var data = new FormData($('form')[0]);
+
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:15348/api/Sender/Sended/',    
+                enctype: 'multipart/form-data',
+                contentType: false,
+                processData: false,         
+                cache: false,
+                data: data, 		        
+                success: function (data, textStatus, xhr) {
+                    $('p').text(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(textStatus + ': ' + errorThrown);
+                }
+            });
+        });
+    });
+
+</script>
+</html>
